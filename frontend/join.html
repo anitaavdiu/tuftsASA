@@ -9,6 +9,9 @@ body {
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
         url('tirana.jpg');
   background-size: cover;
+  height: 100vh;
+  position: relative;
+
 }
 
 * {
@@ -74,11 +77,14 @@ a {
 #successBox {
   display: none;
   max-width: 400px;
-  margin: 20vh auto;
   background: #f8f8f8;
   border-radius: 12px;
   padding: 20px;
   text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 #successBox h2 {
@@ -129,7 +135,7 @@ a {
 
 <div id="successBox">
   <h2>Registration Successful!</h2>
-  <p>Welcome to Tufts ASA — we’re so excited to have you join us!</p>
+  <p>Welcome to Tufts ASA — we’re so excited to have you join us! 🇦🇱🇽🇰</p>
   <button onclick="window.location.href='index.html'">Go Back to Homepage</button>
 </div>
 
