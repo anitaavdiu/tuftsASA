@@ -3,12 +3,22 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 body {
   font-family: "Playfair Display", Georgia, serif;
   background-image: 
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
         url('tirana.jpg');
   background-size: cover;
+  background-position: cover;
+  position: relative;
 }
 
 * {
@@ -133,7 +143,7 @@ a {
 <div id="successBox">
   <h2>Registration Successful!</h2>
   <p>Welcome to Tufts ASA — we’re so excited to have you join us! 🇦🇱🇽🇰</p>
-  <button onclick="window.location.href='index.html'">Go Back to Homepage</button>
+  <button onclick="window.location.href='index.html'">Back to Homepage</button>
 </div>
 
     <script>
