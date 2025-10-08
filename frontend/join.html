@@ -70,6 +70,34 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
+
+#successBox {
+  display: none;
+  max-width: 400px;
+  margin: 40px auto;
+  background: #f8f8f8;
+  border: 2px solid #cf2533;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+#successBox h2 {
+  color: #cf2533;
+}
+#successBox button {
+  background-color: #cf2533;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#successBox button:hover {
+  background-color: #a71f25;
+}
+
 </style>
 </head>
 <body>
@@ -99,6 +127,13 @@ a {
     <p>Are you an Admin? <a href="#">Sign in</a>.</p>
   </div>-->
 </form>
+
+<div id="successBox">
+  <h2>Registration Successful!</h2>
+  <p>Welcome to Tufts ASA — we’re so excited to have you join us!</p>
+  <button onclick="window.location.href='index.html'">Go Back to Homepage</button>
+</div>
+
     <script>
         document.getElementById("registerForm").addEventListener("submit", async function (e) {
         e.preventDefault(); // prevent page refresh
@@ -121,16 +156,18 @@ a {
             const result = await response.json();
 
             if (result.success) {
-            alert("Member registered successfully!");
-            document.getElementById("registerForm").reset(); // clear form
+              document.getElementById("registerForm").style.display = "none";
+              document.getElementById("successBox").style.display = "block";
             } else {
-            alert("Error: " + result.message);
+              alert("Error: " + result.message);
             }
-        } catch (err) {
+          } catch (err) {
             console.error("Request failed:", err);
             alert("Something went wrong. Please try again.");
-        }
+          }
         });
+
+
     </script>
 
 </body>
