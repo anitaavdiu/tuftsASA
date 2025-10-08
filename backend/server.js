@@ -12,6 +12,11 @@ app.use(express.json());
 
 app.use("/api/members", memberRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Tufts ASA backend is running successfully!");
+});
+
+
 connectDB();
 
 app.listen(PORT, () => {
