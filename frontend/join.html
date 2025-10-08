@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Playfair Display", Georgia, serif;
+  background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+        url('tirana.jpg');
+  background-size: cover;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+  max-width: 400px;      /* 👈 makes it narrower */
+  margin: 40px auto;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=number], input {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=number]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #cf2533;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<form id="registerForm">
+  <div class="container">
+    <h1>Register</h1>
+    <p>Please fill in this form to join Tufts ASA.</p>
+    <hr>
+
+    <label for="name"><b>Full Name</b></label>
+    <input type="text" placeholder="Enter your full name" name="name" id="name" required>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+   <label for="year"><b>Graduation Year</b></label>
+   <input type="number" placeholder="e.g. 2027" name="year" id="gradYear" min="2025" max="2030" required>
+
+    <hr>
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+    <button type="submit" class="registerbtn">Register</button>
+  </div>
+  
+  <!--<div class="container signin">
+    <p>Are you an Admin? <a href="#">Sign in</a>.</p>
+  </div>-->
+</form>
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+        e.preventDefault(); // prevent page refresh
+
+        // Get form values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const year = document.getElementById("gradYear").value;
+
+        try {
+            // Send POST request to your backend
+            const response = await fetch("http://localhost:8080/api/members", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, year }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+            alert("Member registered successfully!");
+            document.getElementById("registerForm").reset(); // clear form
+            } else {
+            alert("Error: " + result.message);
+            }
+        } catch (err) {
+            console.error("Request failed:", err);
+            alert("Something went wrong. Please try again.");
+        }
+        });
+    </script>
+
+</body>
+</html>
