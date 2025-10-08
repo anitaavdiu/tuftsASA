@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json()); 
 
 app.get("/", (req, res) => {
-  res.send("✅ Tufts ASA backend is running successfully!");
+  res.send("Tufts ASA backend is running successfully!");
 });
 
 app.use("/api/members", memberRoutes);
