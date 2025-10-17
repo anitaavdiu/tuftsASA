@@ -61,9 +61,12 @@ export default function Home() {
 
         .herotext button {
           border: none;
+          outline: 0;
+          display: inline-block;
           padding: 10px 25px;
           color: black;
           background-color: #ddd;
+          text-align: center;
           cursor: pointer;
         }
 
