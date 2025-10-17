@@ -8,8 +8,8 @@ export default function Home() {
     <>
       <style>{`
         body, html {
-          height: 100%;
           margin: 0;
+          padding: 0;
           font-family: "Playfair Display", Georgia, serif;
         }
 
@@ -40,12 +40,13 @@ export default function Home() {
         }
 
         .heroimage {
-        height: 50%;
+        width: 100%;
+        height: 100vh;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        position: relative;
+        border: 1px solid red; 
         }
 
 
