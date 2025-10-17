@@ -131,7 +131,6 @@ export default function Home() {
         min-height: 450px;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
         background-size: cover;
-        background-position: center 25%;
         background-repeat: no-repeat; 
         }
 
