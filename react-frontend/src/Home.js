@@ -165,7 +165,7 @@ export default function Home() {
         <a href="#contact">Contact</a>
         <a href="#" onClick={() => navigate("/join")}>Join</a>
         <a href="javascript:void(0);" className="icon" onClick={() => window.myFunction()}>
-          <i className="fa fa-bars"></i>
+        &#9776;
         </a>
       </div>
 
