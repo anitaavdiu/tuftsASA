@@ -41,7 +41,7 @@ export default function Home() {
 
         .heroimage {
         width: 100%;
-        height: 500px;
+        height: 400px;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
         background-size: cover;
         background-position: center;
