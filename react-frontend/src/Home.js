@@ -180,7 +180,7 @@ export default function Home() {
         <h2 style={{ textAlign: "center" }}>Our Team</h2>
         <div className="card-container">
           <div className="card">
-            <img src="/anita2.jpeg" alt="Person 1" />
+            <img src="/anita1.jpeg" alt="Person 1" />
             <div className="card-content">
               <h4>Anita Avdiu</h4>
             </div>
