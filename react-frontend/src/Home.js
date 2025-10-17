@@ -103,7 +103,8 @@ export default function Home() {
           /* --- OPEN STATE (.responsive) --- */
           .topnav.responsive {
             position: relative;
-            /* Clear floats for stacking links */
+            /* This is the fix for content collapsing */
+            height: auto; 
             overflow: visible; 
             display: block; 
           }
@@ -123,7 +124,8 @@ export default function Home() {
             float: none;
             display: block;
             text-align: left;
-            width: 100%;
+            width: 100%; /* Crucial: Ensures links take up full width and forces container expansion */
+            box-sizing: border-box; /* Crucial: Prevents padding from breaking 100% width and causing overflow */
           }
           
           /* Crucial: Add right padding to Home link to prevent text collision with the absolute icon */
