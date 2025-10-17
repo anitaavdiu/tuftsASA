@@ -18,7 +18,7 @@ export default function Home() {
           margin: 0;
           padding: 0;
           overflow: hidden;
-          background-color: #ffffff;
+          backgroundColor: #ffffff;
           position: fixed;
           top: 0;
           width: 100%;
@@ -35,7 +35,7 @@ export default function Home() {
         }
 
         ul li a:hover {
-          background-color: #cf2533;
+          backgroundColor: #cf2533;
           color: white;
         }
 
@@ -43,10 +43,9 @@ export default function Home() {
         width: 100%;
         height: 100vh;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border: 1px solid red; 
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
         }
 
 
@@ -63,7 +62,7 @@ export default function Home() {
           border: none;
           padding: 10px 25px;
           color: black;
-          background-color: #ddd;
+          backgroundColor: #ddd;
           cursor: pointer;
         }
 
