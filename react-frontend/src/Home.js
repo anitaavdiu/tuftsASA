@@ -3,31 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-  // State to toggle the 'responsive' class for the mobile menu
-  const [isResponsive, setIsResponsive] = useState(false);
 
-  const toggleResponsive = () => {
-    setIsResponsive(prev => !prev);
-  };
 
-  const handleNavLinkClick = (path) => {
-    // Close the menu if it's responsive (mobile)
-    if (isResponsive) {
-      setIsResponsive(false);
-    }
-
-    // Handle internal navigation (scroll to section or react-router)
-    if (path.startsWith("#")) {
-      // Use requestAnimationFrame to ensure the class change finishes before scrolling
-      requestAnimationFrame(() => {
-        document.querySelector(path).scrollIntoView({ behavior: 'smooth' });
-      });
-    } else if (path === "/join") {
-      navigate("/join");
-    } else if (path === "/") {
-      navigate("/");
-    }
-  };
+  useEffect(() => {
+    window.myFunction = function () {
+      const x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -38,108 +25,63 @@ export default function Home() {
           font-family: "Playfair Display", Georgia, serif;
         }
 
-        /* --- NAVIGATION STYLES (W3Schools Style) --- */
-
-        .navbar {
+        .topnav {
+          overflow: hidden;
           background-color: #ffffff;
+          border-bottom: 1px solid #ddd;
           position: fixed;
           top: 0;
           width: 100%;
           z-index: 1000;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        /* Main Navigation List - Acts as the topnav container */
-        .desktop-nav {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          display: flex; /* Default: horizontal layout for desktop/mobile closed */
-          justify-content: flex-start;
-          align-items: center; /* FIX 1: Vertically align Home link and Icon */
         }
 
-        /* Desktop Link Styling */
-        .desktop-nav li { 
-          /* Ensures list items are part of the flex layout */
-        }
-        
-        .desktop-nav li a {
+        .topnav a {
+          float: left;
           display: block;
           color: black;
           text-align: center;
           padding: 14px 16px;
           text-decoration: none;
+          font-size: 17px;
         }
 
-        .desktop-nav li a:hover {
+        .topnav a:hover {
           background-color: #cf2533;
           color: white;
         }
 
-        /* Hamburger Icon Styling (Hidden by default on desktop) */
-        .desktop-nav .icon {
-            display: none;
-            cursor: pointer;
-            margin-left: auto; /* Pushes the icon to the right */
-        }
-        
-        .desktop-nav .icon a {
-            font-size: 20px;
-            font-weight: bold;
+        .topnav a.active {
+          background-color: #cf2533;
+          color: white;
         }
 
+        .topnav .icon {
+          display: none;
+        }
 
-        /* --- MEDIA QUERY: MOBILE VIEW (<= 768px) --- */
         @media screen and (max-width: 768px) {
-          
-          /* Hide all links except the first one (Home) and the icon */
-          .desktop-nav li:not(:first-child):not(.icon) {
-            display: none;
-          }
-          
-          /* Show the hamburger icon */
-          .desktop-nav .icon {
+          .topnav a:not(:first-child) {display: none;}
+          .topnav a.icon {
+            float: right;
             display: block;
           }
         }
 
-        /* --- MEDIA QUERY: RESPONSIVE STATE (Menu Open on Mobile) --- */
         @media screen and (max-width: 768px) {
-          .desktop-nav.responsive {
-            position: relative;
-            display: block; /* Allows vertical stacking of dropdown items */
-            padding-bottom: 5px; 
-          }
-
-          .desktop-nav.responsive .icon {
+          .topnav.responsive {position: relative;}
+          .topnav.responsive .icon {
             position: absolute;
             right: 0;
             top: 0;
-            padding: 14px 16px; /* Match link padding */
           }
-          
-          /* FIX 2: Add extra right padding to Home link in the open state 
-             to prevent text from clashing with the absolute icon. */
-          .desktop-nav.responsive li:first-child a {
-              padding-right: 60px; 
-          }
-          
-          /* Show all links vertically when 'responsive' class is active */
-          .desktop-nav.responsive li,
-          .desktop-nav.responsive li:not(:first-child):not(.icon) {
+          .topnav.responsive a {
+            float: none;
             display: block;
             text-align: left;
-            width: 100%;
-          }
-
-          /* Ensure the first child (Home) is also full width */
-          .desktop-nav.responsive li:first-child {
-            width: 100%;
           }
         }
-        /* --- END NAVIGATION STYLES --- */
+
+
 
 
         /* --- HERO SECTION STYLES (Height and Position Fixed) --- */
@@ -215,28 +157,18 @@ export default function Home() {
         }
       `}</style>
 
-      <nav className="navbar">
-        {/* The main UL now holds all links and uses the correct classes */}
-        <ul className={`desktop-nav ${isResponsive ? 'responsive' : ''}`}>
-          
-          {/* 1. Home Link (Always visible on all screen sizes) */}
-          <li><a href="/" onClick={(e) => { e.preventDefault(); handleNavLinkClick('/'); }}>Home</a></li>
-          
-          {/* 2. Hidden Links (Shown on desktop, hidden on mobile until toggled) */}
-          <li><a href="#about" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#about'); }}>About</a></li>
-          <li><a href="#team" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#team'); }}>Our Team</a></li>
-          <li><a href="#events" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#events'); }}>Events</a></li>
-          <li><a href="#contact" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#contact'); }}>Contact</a></li>
-          <li><a onClick={() => handleNavLinkClick('/join')}>Join</a></li>
-          
-          {/* 3. Hamburger Icon (Visible only on mobile, triggers the menu toggle) */}
-          <li className="icon">
-            <a href="#" onClick={(e) => { e.preventDefault(); toggleResponsive(); }}>
-              &#9776; {/* Unicode for hamburger icon */}
-            </a>
-          </li>
-        </ul>
-      </nav>
+     <div className="topnav" id="myTopnav">
+        <a href="/" className="active" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Home</a>
+        <a href="#about">About</a>
+        <a href="#team">Our Team</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <a href="#" onClick={() => navigate("/join")}>Join</a>
+        <a href="javascript:void(0);" className="icon" onClick={() => window.myFunction()}>
+          <i className="fa fa-bars"></i>
+        </a>
+      </div>
+
 
       <div className="heroimage">
         <div className="herotext">
