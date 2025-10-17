@@ -120,83 +120,12 @@ export default function Home() {
         </ul>
       </nav>
 
-      <div className="hero-container">
-  <img
-    src="/dua-alb.jpeg"
-    alt="Hero Background"
-    className="hero-img"
-  />
-  <div className="hero-overlay">
-    <h1>Welcome to Tufts ASA!</h1>
-    <button onClick={() => navigate("/join")}>Become a Member</button>
-  </div>
-
-  <style>{`
-    .hero-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .hero-img {
-      width: 100%;
-      height: auto;
-      max-height: 100vh;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      padding: 20px;
-    }
-
-    .hero-overlay h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      font-family: "Playfair Display", Georgia, serif;
-    }
-
-    .hero-overlay button {
-      border: none;
-      padding: 12px 25px;
-      background-color: white;
-      color: black;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .hero-overlay button:hover {
-      background-color: #cf2533;
-      color: white;
-    }
-
-    /* 🔹 Mobile Adjustments */
-    @media (max-width: 768px) {
-      .hero-overlay h1 {
-        font-size: 2rem;
-      }
-      .hero-overlay button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-overlay h1 {
-        font-size: 1.5rem;
-      }
-    }
-  `}</style>
-</div>
-
+      <div className="heroimage">
+        <div className="herotext">
+          <h1>Welcome to Tufts ASA!</h1>
+          <button onClick={() => navigate("/join")}>Become a Member</button>
+        </div>
+      </div>
 
       <section
   id="about"
