@@ -113,7 +113,7 @@ export default function Home() {
           <li><a href="#about">About</a></li>
           <li><a href="#team">Our Team</a></li>
           <li><a href="#events">Events</a></li>
-          <li><a href="Contact"></a></li>
+          <li><a href="#contact">Contact</a></li>
           <li><a onClick={() => navigate("/join")}>Join</a></li>
         </ul>
       </nav>
@@ -288,7 +288,7 @@ export default function Home() {
   </div>
 </section>
 
-<footer
+<footer id="contact"
   style={{
     backgroundColor: "#fff6f8",
     padding: "60px 20px",
@@ -324,7 +324,7 @@ export default function Home() {
     </a>
   </p>
 
-  {/* Instagram Section */}
+  {}
   <div style={{ marginTop: "20px" }}>
     <a
       href="https://instagram.com/asa.tufts"
