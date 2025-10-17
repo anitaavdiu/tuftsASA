@@ -3,6 +3,25 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [isResponsive, setIsResponsive] = useState(false);
+  const toggleResponsive = () => {
+    setIsResponsive(prev => !prev);
+  };
+
+  if (isResponsive) {
+      setIsResponsive(false);
+    }
+
+    if (path.startsWith("#")) {
+      requestAnimationFrame(() => {
+        document.querySelector(path).scrollIntoView({ behavior: 'smooth' });
+      });
+    } else if (path === "/join") {
+      navigate("/join");
+    } else if (path === "/") {
+      navigate("/");
+    }
+  };
 
   return (
     <>
@@ -13,20 +32,34 @@ export default function Home() {
           font-family: "Playfair Display", Georgia, serif;
         }
 
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
+       
+       
+
+        .navbar {
           background-color: #ffffff;
           position: fixed;
           top: 0;
           width: 100%;
           z-index: 1000;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+     
+        .desktop-nav {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          display: flex; 
+          justify-content: flex-start;
         }
 
-        ul li { float: left; }
-        ul li a {
+       
+        .desktop-nav li { 
+    
+        }
+        
+        .desktop-nav li a {
           display: block;
           color: black;
           text-align: center;
@@ -34,9 +67,62 @@ export default function Home() {
           text-decoration: none;
         }
 
-        ul li a:hover {
+        .desktop-nav li a:hover {
           background-color: #cf2533;
           color: white;
+        }
+
+       
+        .desktop-nav .icon {
+            display: none;
+            cursor: pointer;
+            margin-left: auto; 
+        }
+        
+        .desktop-nav .icon a {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        @media screen and (max-width: 768px) {
+          
+         
+          .desktop-nav li:not(:first-child):not(.icon) {
+            display: none;
+          }
+          
+          .desktop-nav .icon {
+            display: block;
+          }
+        }
+
+       
+        @media screen and (max-width: 768px) {
+          .desktop-nav.responsive {
+            position: relative;
+            display: block; 
+            padding-bottom: 5px; 
+          }
+
+          .desktop-nav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 14px 16px; 
+          }
+          
+          
+          .desktop-nav.responsive li,
+          .desktop-nav.responsive li:not(:first-child):not(.icon) {
+            display: block;
+            text-align: left;
+            width: 100%;
+          }
+
+          .desktop-nav.responsive li:first-child {
+            width: 100%;
+          }
         }
 
         .heroimage {
