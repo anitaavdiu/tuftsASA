@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
+  // State to toggle the 'responsive' class for the mobile menu
   const [isResponsive, setIsResponsive] = useState(false);
+
   const toggleResponsive = () => {
     setIsResponsive(prev => !prev);
   };
 
-  if (isResponsive) {
+  const handleNavLinkClick = (path) => {
+    // Close the menu if it's responsive (mobile)
+    if (isResponsive) {
       setIsResponsive(false);
     }
 
+    // Handle internal navigation (scroll to section or react-router)
     if (path.startsWith("#")) {
+      // Use requestAnimationFrame to ensure the class change finishes before scrolling
       requestAnimationFrame(() => {
         document.querySelector(path).scrollIntoView({ behavior: 'smooth' });
       });
@@ -32,8 +38,7 @@ export default function Home() {
           font-family: "Playfair Display", Georgia, serif;
         }
 
-       
-       
+        /* --- NAVIGATION STYLES (W3Schools Style) --- */
 
         .navbar {
           background-color: #ffffff;
@@ -44,19 +49,19 @@ export default function Home() {
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-     
+        /* Main Navigation List - Acts as the topnav container */
         .desktop-nav {
           list-style-type: none;
           margin: 0;
           padding: 0;
           overflow: hidden;
-          display: flex; 
+          display: flex; /* Default: horizontal layout for desktop */
           justify-content: flex-start;
         }
 
-       
+        /* Desktop Link Styling */
         .desktop-nav li { 
-    
+          /* Use inline-block or flex items instead of float for cleaner layout */
         }
         
         .desktop-nav li a {
@@ -72,11 +77,11 @@ export default function Home() {
           color: white;
         }
 
-       
+        /* Hamburger Icon Styling (Hidden by default on desktop) */
         .desktop-nav .icon {
             display: none;
             cursor: pointer;
-            margin-left: auto; 
+            margin-left: auto; /* Pushes the icon to the right */
         }
         
         .desktop-nav .icon a {
@@ -85,34 +90,36 @@ export default function Home() {
         }
 
 
+        /* --- MEDIA QUERY: MOBILE VIEW (<= 768px) --- */
         @media screen and (max-width: 768px) {
           
-         
+          /* Hide all links except the first one (Home) and the icon */
           .desktop-nav li:not(:first-child):not(.icon) {
             display: none;
           }
           
+          /* Show the hamburger icon */
           .desktop-nav .icon {
             display: block;
           }
         }
 
-       
+        /* --- MEDIA QUERY: RESPONSIVE STATE (Menu Open on Mobile) --- */
         @media screen and (max-width: 768px) {
           .desktop-nav.responsive {
             position: relative;
-            display: block; 
-            padding-bottom: 5px; 
+            display: block; /* Allows vertical stacking */
+            padding-bottom: 5px; /* Aesthetic padding for the bottom */
           }
 
           .desktop-nav.responsive .icon {
             position: absolute;
             right: 0;
             top: 0;
-            padding: 14px 16px; 
+            padding: 14px 16px; /* Match link padding */
           }
           
-          
+          /* Show all links vertically when 'responsive' class is active */
           .desktop-nav.responsive li,
           .desktop-nav.responsive li:not(:first-child):not(.icon) {
             display: block;
@@ -120,20 +127,25 @@ export default function Home() {
             width: 100%;
           }
 
+          /* Ensure the first child (Home) is also full width */
           .desktop-nav.responsive li:first-child {
             width: 100%;
           }
         }
+        /* --- END NAVIGATION STYLES --- */
 
+
+        /* --- HERO SECTION STYLES (Height and Position Fixed) --- */
         .heroimage {
-        width: 100%;
-        height: 70vh;
-        min-height: 450px;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat; 
+          width: 100%;
+          height: 70vh; /* Increased height for better visibility */
+          min-height: 450px; 
+          background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
+          background-size: cover;
+          background-position: center top; /* Prioritizes the top content (her face) */
+          background-repeat: no-repeat; 
         }
+        /* --- END HERO SECTION STYLES --- */
 
 
         .herotext {
@@ -197,13 +209,25 @@ export default function Home() {
       `}</style>
 
       <nav className="navbar">
-        <ul className="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#team">Our Team</a></li>
-          <li><a href="#events">Events</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a onClick={() => navigate("/join")}>Join</a></li>
+        {/* The main UL now holds all links and uses the correct classes */}
+        <ul className={`desktop-nav ${isResponsive ? 'responsive' : ''}`}>
+          
+          {/* 1. Home Link (Always visible on all screen sizes) */}
+          <li><a href="/" onClick={(e) => { e.preventDefault(); handleNavLinkClick('/'); }}>Home</a></li>
+          
+          {/* 2. Hidden Links (Shown on desktop, hidden on mobile until toggled) */}
+          <li><a href="#about" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#about'); }}>About</a></li>
+          <li><a href="#team" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#team'); }}>Our Team</a></li>
+          <li><a href="#events" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#events'); }}>Events</a></li>
+          <li><a href="#contact" onClick={(e) => { e.preventDefault(); handleNavLinkClick('#contact'); }}>Contact</a></li>
+          <li><a onClick={() => handleNavLinkClick('/join')}>Join</a></li>
+          
+          {/* 3. Hamburger Icon (Visible only on mobile, triggers the menu toggle) */}
+          <li className="icon">
+            <a href="#" onClick={(e) => { e.preventDefault(); toggleResponsive(); }}>
+              &#9776; {/* Unicode for hamburger icon */}
+            </a>
+          </li>
         </ul>
       </nav>
 
@@ -434,9 +458,6 @@ export default function Home() {
     © {new Date().getFullYear()} Tufts Albanian Student Association. All rights reserved.
   </p>
 </footer>
-
-
-
     </>
   );
 }
