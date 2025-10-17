@@ -127,10 +127,10 @@ export default function Home() {
 
         .heroimage {
         width: 100%;
-        height: 80vh;
+        height: 70vh;
         min-height: 450px;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
-        background-position: center top;
+        background-position: center;
         background-size: cover;
         background-repeat: no-repeat; 
         }
