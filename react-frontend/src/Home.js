@@ -55,13 +55,14 @@ export default function Home() {
           margin: 0;
           padding: 0;
           overflow: hidden;
-          display: flex; /* Default: horizontal layout for desktop */
+          display: flex; /* Default: horizontal layout for desktop/mobile closed */
           justify-content: flex-start;
+          align-items: center; /* FIX 1: Vertically align Home link and Icon */
         }
 
         /* Desktop Link Styling */
         .desktop-nav li { 
-          /* Use inline-block or flex items instead of float for cleaner layout */
+          /* Ensures list items are part of the flex layout */
         }
         
         .desktop-nav li a {
@@ -108,8 +109,8 @@ export default function Home() {
         @media screen and (max-width: 768px) {
           .desktop-nav.responsive {
             position: relative;
-            display: block; /* Allows vertical stacking */
-            padding-bottom: 5px; /* Aesthetic padding for the bottom */
+            display: block; /* Allows vertical stacking of dropdown items */
+            padding-bottom: 5px; 
           }
 
           .desktop-nav.responsive .icon {
@@ -117,6 +118,12 @@ export default function Home() {
             right: 0;
             top: 0;
             padding: 14px 16px; /* Match link padding */
+          }
+          
+          /* FIX 2: Add extra right padding to Home link in the open state 
+             to prevent text from clashing with the absolute icon. */
+          .desktop-nav.responsive li:first-child a {
+              padding-right: 60px; 
           }
           
           /* Show all links vertically when 'responsive' class is active */
