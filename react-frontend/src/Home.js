@@ -40,13 +40,13 @@ export default function Home() {
         }
 
         .heroimage {
-            width: 100%;
-            height: 100vh;
-            background-image: url('/dua-alb.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: 1px solid red; 
+        width: 100%;
+        height: 100vh;
+        background-image: url('/dua-alb.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border: 1px solid red; 
         }
 
 
