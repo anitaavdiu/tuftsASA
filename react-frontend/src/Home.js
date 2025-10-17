@@ -95,16 +95,39 @@ export default function Home() {
         }
 
         .heroimage {
-          height: 100vh;
-          background-image:
+        min-height: 100vh;
+        background-image:
             linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
             url('/dua-alb.jpeg');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          position: relative;
-          margin-top: 60px;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: black;
+            position: relative;
+            margin-top: 60px;
         }
+
+        @media (max-width: 768px) {
+        .heroimage {
+            background-size: cover;
+            background-position: center top;
+            min-height: 90vh;
+        }
+
+        .herotext {
+            top: 60%;
+        }
+
+        .herotext h1 {
+            font-size: 2rem;
+        }
+
+        .herotext button {
+            padding: 10px 24px;
+            font-size: 0.95rem;
+        }
+        }
+
 
         .herotext {
           text-align: center;
