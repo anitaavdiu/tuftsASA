@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd react-frontend && npm run build",
+  "buildCommand": "cd react-frontend && npm install && npm run build",
   "outputDirectory": "react-frontend/build",
   "installCommand": "cd react-frontend && npm install"
 }
