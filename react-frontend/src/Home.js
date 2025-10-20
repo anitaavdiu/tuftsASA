@@ -3,13 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('');
 
   const toggleMobileMenu = () => {
     const x = document.getElementById("myTopnav");
+    console.log("Current class:", x.className);
     if (x.className === "topnav") {
       x.className += " responsive";
+      console.log("Opening menu, new class:", x.className);
     } else {
       x.className = "topnav";
+      console.log("Closing menu, new class:", x.className);
     }
   };
 
@@ -22,6 +26,7 @@ export default function Home() {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
     }
     closeMobileMenu();
   };
@@ -29,6 +34,7 @@ export default function Home() {
   const handleHomeClick = (e) => {
     e.preventDefault();
     navigate("/");
+    setActiveSection('');
     closeMobileMenu();
   };
 
@@ -36,6 +42,28 @@ export default function Home() {
     navigate("/join");
     closeMobileMenu();
   };
+
+  // Add scroll listener to detect current section
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['about', 'team', 'events', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -54,8 +82,9 @@ export default function Home() {
           position: fixed;
           top: 0;
           width: 100%;
-          z-index: 1000;
+          z-index: 9999;
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          min-height: 50px;
         }
 
         .topnav a {
@@ -103,7 +132,8 @@ export default function Home() {
             width: 100%;
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 1000;
+            z-index: 9999;
+            overflow: visible;
           }
           .topnav.responsive .icon {
             position: absolute;
@@ -113,10 +143,12 @@ export default function Home() {
           }
           .topnav.responsive a {
             float: none;
-            display: block;
+            display: block !important;
             text-align: left;
             padding: 14px 16px;
             border-bottom: 1px solid #f0f0f0;
+            width: 100%;
+            box-sizing: border-box;
           }
           .topnav.responsive a:last-child {
             border-bottom: none;
@@ -214,11 +246,11 @@ export default function Home() {
       `}</style>
 
      <div className="topnav" id="myTopnav">
-        <a href="/" onClick={handleHomeClick}>Home</a>
-        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a>
-        <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }}>Our Team</a>
-        <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }}>Events</a>
-        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
+        <a href="/" onClick={handleHomeClick} className={activeSection === '' ? 'active' : ''}>Home</a>
+        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className={activeSection === 'about' ? 'active' : ''}>About</a>
+        <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }} className={activeSection === 'team' ? 'active' : ''}>Our Team</a>
+        <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }} className={activeSection === 'events' ? 'active' : ''}>Events</a>
+        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className={activeSection === 'contact' ? 'active' : ''}>Contact</a>
         <a href="#" onClick={handleJoinClick}>Join</a>
         <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
           ☰

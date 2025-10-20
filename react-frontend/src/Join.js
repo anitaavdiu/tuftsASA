@@ -1,8 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Join() {
   const navigate = useNavigate();
+
+  const toggleMobileMenu = () => {
+    const x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  };
+
+  const closeMobileMenu = () => {
+    const x = document.getElementById("myTopnav");
+    x.className = "topnav";
+  };
+
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+    closeMobileMenu();
+  };
+
+  const handleJoinClick = () => {
+    navigate("/join");
+    closeMobileMenu();
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -63,31 +88,84 @@ export default function Join() {
         }
 
         /* Navbar */
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
+        .topnav {
           overflow: hidden;
           background-color: #ffffff;
+          border-bottom: 1px solid #ddd;
           position: fixed;
           top: 0;
           width: 100%;
-          z-index: 1000;
+          z-index: 9999;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          min-height: 50px;
         }
 
-        ul li { float: left; }
-
-        ul li a {
+        .topnav a {
+          float: left;
           display: block;
           color: black;
           text-align: center;
           padding: 14px 16px;
           text-decoration: none;
+          font-size: 17px;
         }
 
-        ul li a:hover {
+        .topnav a:hover {
           background-color: #cf2533;
           color: white;
+        }
+
+        .topnav a.active {
+          background-color: #cf2533;
+          color: white;
+        }
+
+        .topnav .icon {
+          display: none;
+          font-size: 20px;
+          font-weight: bold;
+          color: #333;
+        }
+
+        @media screen and (max-width: 768px) {
+          .topnav a:not(:first-child) {display: none;}
+          .topnav a.icon {
+            float: right;
+            display: block;
+            padding: 14px 16px;
+            font-size: 20px;
+            cursor: pointer;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          .topnav.responsive {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 9999;
+            overflow: visible;
+          }
+          .topnav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 14px 16px;
+          }
+          .topnav.responsive a {
+            float: none;
+            display: block !important;
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .topnav.responsive a:last-child {
+            border-bottom: none;
+          }
         }
 
         /* Form container */
@@ -170,17 +248,17 @@ export default function Join() {
         }
       `}</style>
 
-      {}
-      <nav className="navbar">
-        <ul className="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/#about">About</a></li>
-          <li><a href="/#team">Our Team</a></li>
-          <li><a href="/#events">Events</a></li>
-          <li><a href="/#contact">Contact</a></li>
-          <li><a onClick={() => navigate("/join")}>Join</a></li>
-        </ul>
-      </nav>
+      <div className="topnav" id="myTopnav">
+        <a href="/" onClick={handleHomeClick}>Home</a>
+        <a href="/#about" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>About</a>
+        <a href="/#team" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Our Team</a>
+        <a href="/#events" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Events</a>
+        <a href="/#contact" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Contact</a>
+        <a href="#" onClick={handleJoinClick} className="active">Join</a>
+        <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
+          ☰
+        </a>
+      </div>
 
       {}
       {!success ? (
