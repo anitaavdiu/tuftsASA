@@ -1,31 +1,114 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "./Navbar"; 
 
 export default function Home() {
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    window.myFunction = function () {
+      const x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    };
+  }, []);
+
   return (
     <>
-      <Navbar /> {}
-
       <style>{`
-        /* Keep all your other styles for the page content here */
         body, html {
           margin: 0;
           padding: 0;
           font-family: "Playfair Display", Georgia, serif;
         }
 
+        .topnav {
+          overflow: hidden;
+          background-color: #ffffff;
+          border-bottom: 1px solid #ddd;
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 1000;
+        }
+
+        .topnav a {
+          float: left;
+          display: block;
+          color: black;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .topnav a:hover {
+          background-color: #cf2533;
+          color: white;
+        }
+
+        .topnav a.active {
+          background-color: #cf2533;
+          color: white;
+        }
+
+        .topnav .icon {
+          display: none;
+          font-size: 20px;
+          font-weight: bold;
+          color: #333;
+        }
+
+        @media screen and (max-width: 768px) {
+          .topnav a:not(:first-child) {display: none;}
+          .topnav a.icon {
+            float: right;
+            display: block;
+            padding: 14px 16px;
+            font-size: 20px;
+            cursor: pointer;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          .topnav.responsive {
+            position: relative;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          }
+          .topnav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 14px 16px;
+          }
+          .topnav.responsive a {
+            float: none;
+            display: block;
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+          }
+          .topnav.responsive a:last-child {
+            border-bottom: none;
+          }
+        }
+
+
+
+
         /* --- HERO SECTION STYLES (Height and Position Fixed) --- */
         .heroimage {
           width: 100%;
           height: 70vh; /* Increased height for better visibility */
-          min-height: 450px;
+          min-height: 450px; 
           background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/dua-alb.jpeg');
           background-size: cover;
           background-position: center top; /* Prioritizes the top content (her face) */
-          background-repeat: no-repeat;
+          background-repeat: no-repeat; 
         }
         /* --- END HERO SECTION STYLES --- */
 
@@ -90,7 +173,19 @@ export default function Home() {
         }
       `}</style>
 
-      {/* The rest of your page content remains the same */}
+     <div className="topnav" id="myTopnav">
+        <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Home</a>
+        <a href="#about">About</a>
+        <a href="#team">Our Team</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <a href="#" onClick={() => navigate("/join")}>Join</a>
+        <a href="javascript:void(0);" className="icon" onClick={() => window.myFunction()} style={{fontSize: '20px', fontWeight: 'bold'}}>
+          ☰
+        </a>
+      </div>
+
+
       <div className="heroimage">
         <div className="herotext">
           <h1>Welcome to Tufts ASA!</h1>
@@ -144,6 +239,10 @@ export default function Home() {
     />
   </div>
 </section>
+
+
+
+
 
       <section id="team">
         <h2 style={{ textAlign: "center" }}>Our Team</h2>
@@ -316,4 +415,4 @@ export default function Home() {
 </footer>
     </>
   );
-}
+};
