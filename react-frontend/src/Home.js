@@ -4,32 +4,38 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
 
-
-  useEffect(() => {
-    window.myFunction = function () {
-      const x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-    };
-
-    // Function to close mobile menu when clicking on a link
-    window.closeMobileMenu = function() {
-      const x = document.getElementById("myTopnav");
+  const toggleMobileMenu = () => {
+    const x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
       x.className = "topnav";
-    };
+    }
+  };
 
-    // Function to scroll to section and close menu
-    window.scrollToSection = function(sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-      window.closeMobileMenu();
-    };
-  }, []);
+  const closeMobileMenu = () => {
+    const x = document.getElementById("myTopnav");
+    x.className = "topnav";
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    closeMobileMenu();
+  };
+
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+    closeMobileMenu();
+  };
+
+  const handleJoinClick = () => {
+    navigate("/join");
+    closeMobileMenu();
+  };
 
   return (
     <>
@@ -208,13 +214,13 @@ export default function Home() {
       `}</style>
 
      <div className="topnav" id="myTopnav">
-        <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); window.closeMobileMenu(); }}>Home</a>
-        <a href="#about" onClick={(e) => { e.preventDefault(); window.scrollToSection('about'); }}>About</a>
-        <a href="#team" onClick={(e) => { e.preventDefault(); window.scrollToSection('team'); }}>Our Team</a>
-        <a href="#events" onClick={(e) => { e.preventDefault(); window.scrollToSection('events'); }}>Events</a>
-        <a href="#contact" onClick={(e) => { e.preventDefault(); window.scrollToSection('contact'); }}>Contact</a>
-        <a href="#" onClick={() => { navigate("/join"); window.closeMobileMenu(); }}>Join</a>
-        <a href="javascript:void(0);" className="icon" onClick={() => window.myFunction()} style={{fontSize: '20px', fontWeight: 'bold'}}>
+        <a href="/" onClick={handleHomeClick}>Home</a>
+        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a>
+        <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }}>Our Team</a>
+        <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }}>Events</a>
+        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
+        <a href="#" onClick={handleJoinClick}>Join</a>
+        <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
           ☰
         </a>
       </div>
