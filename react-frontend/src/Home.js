@@ -14,6 +14,21 @@ export default function Home() {
         x.className = "topnav";
       }
     };
+
+    // Function to close mobile menu when clicking on a link
+    window.closeMobileMenu = function() {
+      const x = document.getElementById("myTopnav");
+      x.className = "topnav";
+    };
+
+    // Function to scroll to section and close menu
+    window.scrollToSection = function(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+      window.closeMobileMenu();
+    };
   }, []);
 
   return (
@@ -23,6 +38,7 @@ export default function Home() {
           margin: 0;
           padding: 0;
           font-family: "Playfair Display", Georgia, serif;
+          scroll-behavior: smooth;
         }
 
         .topnav {
@@ -33,6 +49,7 @@ export default function Home() {
           top: 0;
           width: 100%;
           z-index: 1000;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .topnav a {
@@ -75,9 +92,12 @@ export default function Home() {
 
         @media screen and (max-width: 768px) {
           .topnav.responsive {
-            position: relative;
+            position: fixed;
+            top: 0;
+            width: 100%;
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
           }
           .topnav.responsive .icon {
             position: absolute;
@@ -188,12 +208,12 @@ export default function Home() {
       `}</style>
 
      <div className="topnav" id="myTopnav">
-        <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Home</a>
-        <a href="#about">About</a>
-        <a href="#team">Our Team</a>
-        <a href="#events">Events</a>
-        <a href="#contact">Contact</a>
-        <a href="#" onClick={() => navigate("/join")}>Join</a>
+        <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); window.closeMobileMenu(); }}>Home</a>
+        <a href="#about" onClick={(e) => { e.preventDefault(); window.scrollToSection('about'); }}>About</a>
+        <a href="#team" onClick={(e) => { e.preventDefault(); window.scrollToSection('team'); }}>Our Team</a>
+        <a href="#events" onClick={(e) => { e.preventDefault(); window.scrollToSection('events'); }}>Events</a>
+        <a href="#contact" onClick={(e) => { e.preventDefault(); window.scrollToSection('contact'); }}>Contact</a>
+        <a href="#" onClick={() => { navigate("/join"); window.closeMobileMenu(); }}>Join</a>
         <a href="javascript:void(0);" className="icon" onClick={() => window.myFunction()} style={{fontSize: '20px', fontWeight: 'bold'}}>
           ☰
         </a>
