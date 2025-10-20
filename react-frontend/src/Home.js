@@ -4,22 +4,23 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     const x = document.getElementById("myTopnav");
-    console.log("Current class:", x.className);
-    if (x.className === "topnav") {
+    const opening = x.className === "topnav";
+    if (opening) {
       x.className += " responsive";
-      console.log("Opening menu, new class:", x.className);
     } else {
       x.className = "topnav";
-      console.log("Closing menu, new class:", x.className);
     }
+    setIsMenuOpen(opening);
   };
 
   const closeMobileMenu = () => {
     const x = document.getElementById("myTopnav");
     x.className = "topnav";
+    setIsMenuOpen(false);
   };
 
   const scrollToSection = (sectionId) => {
@@ -87,7 +88,7 @@ export default function Home() {
           min-height: 50px;
         }
 
-        .topnav a {
+        .topnav a, .topnav .label {
           float: left;
           display: block;
           color: black;
@@ -115,7 +116,9 @@ export default function Home() {
         }
 
         @media screen and (max-width: 768px) {
-          .topnav a:not(:first-child) {display: none;}
+          /* On mobile, show only the label and hamburger by default */
+          .topnav a {display: none;}
+          .topnav .label {display: block; text-align: left;}
           .topnav a.icon {
             float: right;
             display: block;
@@ -141,6 +144,8 @@ export default function Home() {
             top: 0;
             padding: 14px 16px;
           }
+          /* When open, show all links stacked; hide the label text */
+          .topnav.responsive .label {display: none;}
           .topnav.responsive a {
             float: none;
             display: block !important;
@@ -245,17 +250,25 @@ export default function Home() {
         }
       `}</style>
 
-     <div className="topnav" id="myTopnav">
-        <a href="/" onClick={handleHomeClick} className={activeSection === '' ? 'active' : ''}>Home</a>
-        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className={activeSection === 'about' ? 'active' : ''}>About</a>
-        <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }} className={activeSection === 'team' ? 'active' : ''}>Our Team</a>
-        <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }} className={activeSection === 'events' ? 'active' : ''}>Events</a>
-        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className={activeSection === 'contact' ? 'active' : ''}>Contact</a>
-        <a href="#" onClick={handleJoinClick}>Join</a>
-        <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
-          ☰
-        </a>
-      </div>
+     {(() => {
+        const labelMap = { '': 'Home', about: 'About', team: 'Our Team', events: 'Events', contact: 'Contact' };
+        const currentLabel = labelMap[activeSection] || 'Home';
+        const menuClass = isMenuOpen ? 'topnav responsive' : 'topnav';
+        return (
+          <div className={menuClass} id="myTopnav">
+            <span className="label">{currentLabel}</span>
+            <a href="/" onClick={handleHomeClick} className={isMenuOpen && activeSection === '' ? 'active' : ''}>Home</a>
+            <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className={isMenuOpen && activeSection === 'about' ? 'active' : ''}>About</a>
+            <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }} className={isMenuOpen && activeSection === 'team' ? 'active' : ''}>Our Team</a>
+            <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }} className={isMenuOpen && activeSection === 'events' ? 'active' : ''}>Events</a>
+            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className={isMenuOpen && activeSection === 'contact' ? 'active' : ''}>Contact</a>
+            <a href="#" onClick={handleJoinClick}>Join</a>
+            <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
+              ☰
+            </a>
+          </div>
+        );
+      })()}
 
 
       <div className="heroimage">

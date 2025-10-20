@@ -3,19 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 export default function Join() {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     const x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
+    const opening = x.className === "topnav";
+    if (opening) {
       x.className += " responsive";
     } else {
       x.className = "topnav";
     }
+    setIsMenuOpen(opening);
   };
 
   const closeMobileMenu = () => {
     const x = document.getElementById("myTopnav");
     x.className = "topnav";
+    setIsMenuOpen(false);
   };
 
   const handleHomeClick = (e) => {
@@ -248,17 +252,23 @@ export default function Join() {
         }
       `}</style>
 
-      <div className="topnav" id="myTopnav">
-        <a href="/" onClick={handleHomeClick}>Home</a>
-        <a href="/#about" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>About</a>
-        <a href="/#team" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Our Team</a>
-        <a href="/#events" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Events</a>
-        <a href="/#contact" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Contact</a>
-        <a href="#" onClick={handleJoinClick} className="active">Join</a>
-        <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
-          ☰
-        </a>
-      </div>
+      {(() => {
+        const menuClass = isMenuOpen ? 'topnav responsive' : 'topnav';
+        return (
+          <div className={menuClass} id="myTopnav">
+            <span className="label">Join</span>
+            <a href="/" onClick={handleHomeClick}>Home</a>
+            <a href="/#about" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>About</a>
+            <a href="/#team" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Our Team</a>
+            <a href="/#events" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Events</a>
+            <a href="/#contact" onClick={(e) => { e.preventDefault(); navigate("/"); closeMobileMenu(); }}>Contact</a>
+            <a href="#" onClick={handleJoinClick} className="active">Join</a>
+            <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
+              ☰
+            </a>
+          </div>
+        );
+      })()}
 
       {}
       {!success ? (
