@@ -110,6 +110,20 @@ export default function Home() {
           background-position: center top; /* Prioritizes the top content (her face) */
           background-repeat: no-repeat; 
         }
+
+        /* Mobile-specific positioning for better face visibility */
+        @media screen and (max-width: 768px) {
+          .heroimage {
+            background-position: 30% top; /* Show more of the left side (Dua's face) */
+            background-size: cover;
+          }
+        }
+
+        @media screen and (max-width: 480px) {
+          .heroimage {
+            background-position: 25% top; /* Even more left positioning for small screens */
+          }
+        }
         /* --- END HERO SECTION STYLES --- */
 
 
