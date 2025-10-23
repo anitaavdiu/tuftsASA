@@ -1,81 +1,37 @@
-.navbar {
-  background: #fff;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  border-bottom: 1px solid #ddd;
-  z-index: 1000;
-}
+/* Add the active style for the link on the current page */
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px;
-  padding: 0 20px;
-}
-
-.nav-logo {
-  color: black;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-.nav-menu li a {
-  text-decoration: none;
-  color: black;
-  padding: 8px 12px;
-  transition: 0.3s;
-  border-radius: 4px;
-}
-
-.nav-menu li a:hover {
+/* Style for desktop menu links when active */
+.nav-menu li a.active {
+  /* Apply the same style as hover to indicate the active page */
   background: #cf2533;
   color: white;
+  pointer-events: none; /* Make it unclickable when active */
 }
 
-/* === MOBILE === */
-.nav-icon {
-  display: none;
-  font-size: 22px;
-  cursor: pointer;
+/* Style for the logo when on the root route */
+.nav-logo.active {
+    /* If you want a different style for the logo when active, define it here */
+    color: #cf2533;
 }
 
+
+/* === MOBILE (inside the media query) === */
 @media screen and (max-width: 768px) {
-  .nav-menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    flex-direction: column;
-    background: #cf2533;
-    width: 100%;
-    text-align: center;
-    padding: 20px 0;
-  }
+    /* ... existing mobile styles ... */
+    
+    .nav-menu li a {
+        color: white;
+        font-size: 1.1rem;
+        padding: 15px 0;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0;
+    }
 
-  .nav-menu.active {
-    display: flex;
-  }
-
-  .nav-menu li a {
-    color: white;
-    font-size: 18px;
-  }
-
-  .nav-icon {
-    display: block;
-  }
+    /* Style for mobile menu links when active */
+    .nav-menu li a.active {
+        background: #a91e2b; /* A distinct active background for mobile */
+        color: white;
+        pointer-events: none;
+    }
 }

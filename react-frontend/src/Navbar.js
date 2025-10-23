@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { useNavigate } from "react-router-dom";
+// IMPORT NavLink HERE
+import { useNavigate, NavLink } from "react-router-dom"; 
 
 export const Navbar = () => {
   const [click, setClick] = useState(false);
@@ -12,19 +13,23 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <a
-          href="/"
+        {/* Use NavLink for the logo to highlight it on the root path ("/") */}
+        <NavLink
+          to="/" // Changed href to to
           className="nav-logo"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/");
-            closeMenu();
-          }}
+          onClick={closeMenu}
+          // The 'end' prop ensures it only highlights when the path is exactly "/"
+          end 
         >
           Tufts ASA
-        </a>
+        </NavLink>
 
         <ul className={click ? "nav-menu active" : "nav-menu"}>
+          {/* NOTE: The scroll-to-section links below should remain <a> tags 
+            because they don't navigate to a new route, they just scroll 
+            on the current page. We can't use NavLink for these. 
+          */}
+          
           <li>
             <a
               href="#about"
@@ -37,6 +42,7 @@ export const Navbar = () => {
               About
             </a>
           </li>
+          {/* ... other scroll links ... */}
           <li>
             <a
               href="#team"
@@ -73,16 +79,15 @@ export const Navbar = () => {
               Contact
             </a>
           </li>
+          
+          {/* Use NavLink for "Join" since it navigates to a new route */}
           <li>
-            <a
-              href="#"
-              onClick={() => {
-                navigate("/join");
-                closeMenu();
-              }}
+            <NavLink
+              to="/join" // Changed href to to
+              onClick={closeMenu}
             >
               Join
-            </a>
+            </NavLink>
           </li>
         </ul>
 

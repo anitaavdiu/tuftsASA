@@ -1,0 +1,9 @@
+backend/
+old-frontend/
+node_modules/
+.env
+.DS_Store
+*.log
+package.json
+package-lock.json
+index.html
