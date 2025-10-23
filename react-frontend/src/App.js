@@ -1,15 +1,19 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import Join from "./Join";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Join from "./pages/Join";
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/join" element={<Join />} />
+        {}
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
