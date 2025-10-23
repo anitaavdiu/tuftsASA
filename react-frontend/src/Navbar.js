@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Navbar.css";
+// IMPORT NavLink HERE
 import { useNavigate, NavLink } from "react-router-dom"; 
 
 export const Navbar = () => {
@@ -12,21 +13,20 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        {/* Use NavLink for the logo to highlight it on the root path ("/") */}
+        {/* LOGO serves as the Home link */}
         <NavLink
-          to="/" // Changed href to to
+          to="/" 
           className="nav-logo"
           onClick={closeMenu}
-          // The 'end' prop ensures it only highlights when the path is exactly "/"
           end 
         >
           Tufts ASA
         </NavLink>
 
         <ul className={click ? "nav-menu active" : "nav-menu"}>
-          {/* NOTE: The scroll-to-section links below should remain <a> tags 
-            because they don't navigate to a new route, they just scroll 
-            on the current page. We can't use NavLink for these. 
+          
+          {/* REMOVED THE REDUNDANT <li> FOR "HOME" HERE. 
+            The list now starts with "About".
           */}
           
           <li>
@@ -41,7 +41,6 @@ export const Navbar = () => {
               About
             </a>
           </li>
-          {/* ... other scroll links ... */}
           <li>
             <a
               href="#team"
@@ -79,10 +78,10 @@ export const Navbar = () => {
             </a>
           </li>
           
-          {/* Use NavLink for "Join" since it navigates to a new route */}
+          {/* Use NavLink for "Join" */}
           <li>
             <NavLink
-              to="/join" // Changed href to to
+              to="/join" 
               onClick={closeMenu}
             >
               Join
