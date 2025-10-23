@@ -17,7 +17,7 @@
 
 /* === MOBILE (inside the media query) === */
 @media screen and (max-width: 768px) {
-    /* ... existing mobile styles ... */
+
     
     .nav-menu li a {
         color: white;
