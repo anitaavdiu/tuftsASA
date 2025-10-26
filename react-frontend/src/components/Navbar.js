@@ -57,6 +57,18 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Get display text for current section
+  const getSectionDisplayName = () => {
+    const displayNames = {
+      'about': 'About',
+      'team': 'Our Team',
+      'events': 'Events',
+      'contact': 'Contact',
+      '': 'Home'
+    };
+    return displayNames[activeSection] || 'Home';
+  };
+
   return (
     <>
       <style>{`
@@ -80,6 +92,7 @@ export default function Navbar() {
           padding: 14px 16px;
           text-decoration: none;
           font-size: 17px;
+          background-color: white;
         }
 
         .navbar a:hover {
@@ -99,8 +112,24 @@ export default function Navbar() {
           color: #333;
         }
 
+        .mobile-label {
+          display: none;
+          float: left;
+          padding: 14px 16px;
+          font-size: 17px;
+          color: black;
+          font-weight: normal;
+        }
+
         @media screen and (max-width: 768px) {
-          .navbar a:not(:first-child) {display: none;}
+          .mobile-label {
+            display: block;
+          }
+
+          .navbar a:not(:first-child) {
+            display: none;
+          }
+
           .navbar a.icon {
             float: right;
             display: block;
@@ -138,10 +167,14 @@ export default function Navbar() {
           .navbar.responsive a:last-child {
             border-bottom: none;
           }
+          .navbar.responsive .mobile-label {
+            display: none;
+          }
         }
       `}</style>
 
       <nav className={`navbar ${isMenuOpen ? 'responsive' : ''}`}>
+        <span className="mobile-label">{getSectionDisplayName()}</span>
         <a href="/" onClick={handleHomeClick}>Home</a>
         <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a>
         <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }}>Our Team</a>
