@@ -3,31 +3,39 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const toggleMobileMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMobileMenu = () => setIsMenuOpen(false);
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          setActiveSection(sectionId);
+        }
+      }, 400); 
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(sectionId);
+      }
     }
     closeMobileMenu();
-  };
+  };  
+
 
   const handleHomeClick = (e) => {
     e.preventDefault();
     navigate("/");
-    setActiveSection('');
+    setActiveSection("");
     closeMobileMenu();
+    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 150);
   };
 
   const handleJoinClick = () => {
@@ -35,17 +43,19 @@ export default function Navbar() {
     closeMobileMenu();
   };
 
-  // Scroll listener to detect current section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'team', 'events', 'contact'];
+      const sections = ["about", "team", "events"];
       const scrollPosition = window.scrollY + 100;
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(sectionId);
             break;
           }
@@ -53,138 +63,194 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Get display text for current section
-  const getSectionDisplayName = () => {
-    const displayNames = {
-      'about': 'About',
-      'team': 'Our Team',
-      'events': 'Events',
-      'contact': 'Contact',
-      '': 'Home'
-    };
-    return displayNames[activeSection] || 'Home';
-  };
 
   return (
     <>
       <style>{`
-        .navbar {
-          overflow: hidden;
-          background-color: #ffffff;
-          border-bottom: 1px solid #ddd;
-          position: fixed;
+        :root {
+          --primary-red: #cf2533;
+          --dark-text: #111111;
+          --light-bg: #ffffff;
+          --hover-underline: #cf2533;
+          --transition: all 0.3s ease;
+          --shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1.1rem 2rem;
+          background: var(--light-bg);
+          color: var(--dark-text);
+          position: sticky;
           top: 0;
-          width: 100%;
-          z-index: 9999;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          min-height: 50px;
+          z-index: 10;
+          box-shadow: var(--shadow);
+          border-bottom: 1px solid #eee;
         }
 
-        .navbar a {
-          float: left;
-          display: block;
-          color: black;
-          text-align: center;
-          padding: 14px 16px;
+        .logo {
+          font-family: 'Lato', sans-serif;
+          font-size: 1.6rem;
+          font-weight: 600;
+          color: var(--primary-red);
+          cursor: pointer;
           text-decoration: none;
-          font-size: 17px;
-          background-color: white;
+          letter-spacing: 0.5px;
         }
 
-        .navbar a:hover {
-          background-color: #cf2533;
-          color: white;
+        nav {
+          display: flex;
+          gap: 1.6rem;
+          align-items: center;
+          transition: var(--transition);
         }
 
-        .navbar a.active {
-          background-color: #cf2533;
-          color: white;
+        nav a {
+          position: relative;
+          color: var(--dark-text);
+          text-decoration: none;
+          font-weight: 500;
+          font-family: 'Lato', sans-serif;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          font-size: 0.9rem;
+          transition: var(--transition);
         }
 
-        .navbar .icon {
+        nav a:hover,
+        nav a.active {
+          color: var(--primary-red);
+        }
+
+        nav a::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -4px;
+          height: 2px;
+          width: 0;
+          background: var(--hover-underline);
+          transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+          width: 100%;
+        }
+
+        /* Mobile menu icon */
+        .menu-icon {
           display: none;
-          font-size: 20px;
-          font-weight: bold;
-          color: #333;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 24px;
+          height: 18px;
+          cursor: pointer;
         }
 
-        .mobile-label {
-          display: none;
-          float: left;
-          padding: 14px 16px;
-          font-size: 17px;
-          color: black;
-          font-weight: normal;
+        .menu-icon span {
+          display: block;
+          height: 3px;
+          background: var(--primary-red);
+          border-radius: 2px;
+          transition: var(--transition);
         }
 
-        @media screen and (max-width: 768px) {
-          .mobile-label {
-            display: block;
-          }
-
-          .navbar a:not(:first-child) {
-            display: none;
-          }
-
-          .navbar a.icon {
-            float: right;
-            display: block;
-            padding: 14px 16px;
-            font-size: 20px;
-            cursor: pointer;
-          }
-        }
-
-        @media screen and (max-width: 768px) {
-          .navbar.responsive {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 9999;
-            overflow: visible;
-          }
-          .navbar.responsive .icon {
+        @media (max-width: 768px) {
+          nav {
             position: absolute;
+            top: 70px;
+            left: 0;
             right: 0;
-            top: 0;
-            padding: 14px 16px;
+            background: var(--light-bg);
+            flex-direction: column;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
           }
-          .navbar.responsive a {
-            float: none;
-            display: block !important;
-            text-align: left;
-            padding: 14px 16px;
-            border-bottom: 1px solid #f0f0f0;
-            width: 100%;
-            box-sizing: border-box;
+
+          nav.open {
+            opacity: 1;
+            max-height: 300px;
           }
-          .navbar.responsive a:last-child {
-            border-bottom: none;
+
+          .menu-icon {
+            display: flex;
           }
-          .navbar.responsive .mobile-label {
-            display: none;
+
+          .menu-icon.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+          }
+
+          .menu-icon.open span:nth-child(2) {
+            opacity: 0;
+          }
+
+          .menu-icon.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
           }
         }
       `}</style>
 
-      <nav className={`navbar ${isMenuOpen ? 'responsive' : ''}`}>
-        <span className="mobile-label">{getSectionDisplayName()}</span>
-        <a href="/" onClick={handleHomeClick}>Home</a>
-        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a>
-        <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team'); }}>Our Team</a>
-        <a href="#events" onClick={(e) => { e.preventDefault(); scrollToSection('events'); }}>Events</a>
-        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
-        <a href="#" onClick={handleJoinClick}>Join</a>
-        <a href="javascript:void(0);" className="icon" onClick={toggleMobileMenu} style={{fontSize: '20px', fontWeight: 'bold'}}>
-          ☰
-        </a>
-      </nav>
+      <header>
+        <div className="logo" onClick={handleHomeClick}>
+          Tufts ASA
+        </div>
+
+        <div
+          className={`menu-icon ${isMenuOpen ? "open" : ""}`}
+          onClick={toggleMobileMenu}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <nav className={isMenuOpen ? "open" : ""}>
+          <a
+            href="#about"
+            className={activeSection === "about" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("about");
+            }}
+          >
+            About
+          </a>
+          <a
+            href="#team"
+            className={activeSection === "team" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("team");
+            }}
+          >
+            Team
+          </a>
+          <a
+            href="#events"
+            className={activeSection === "events" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("events");
+            }}
+          >
+            Events
+          </a>
+          <a onClick={handleJoinClick}>Join</a>
+        </nav>
+      </header>
     </>
   );
 }
